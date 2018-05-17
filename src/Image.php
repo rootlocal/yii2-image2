@@ -30,10 +30,6 @@ use yii\helpers\ArrayHelper;
  */
 class Image extends Component
 {
-    /**
-     * @var Thumb
-     */
-    private $_thumb;
 
     /**
      * default driver: GD, Imagick
@@ -58,12 +54,9 @@ class Image extends Component
             'watermarkFile' => $this->watermarkFile,
         ];
 
-        if (empty($this->_thumb)) {
-            $config = ArrayHelper::merge($componentConfig, $config);
-            $this->_thumb = Thumb::getInstance($config);
-        }
+        $config = ArrayHelper::merge($componentConfig, $config);
 
-        return $this->_thumb;
+        return Thumb::getInstance($config);
     }
 
 }

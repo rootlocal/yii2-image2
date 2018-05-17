@@ -70,11 +70,6 @@ class Thumb extends BaseObject
     public $driver = 'GD';
 
     /**
-     * @var ThumbConfig
-     */
-    private $_thumbConfig;
-
-    /**
      * @var Thumb
      */
     private static $instance;
@@ -85,9 +80,7 @@ class Thumb extends BaseObject
      */
     public static function getInstance(array $config = [])
     {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self($config);
-        }
+        self::$instance = new self($config);
         return self::$instance;
     }
 
@@ -111,12 +104,9 @@ class Thumb extends BaseObject
     /**
      * @return ThumbConfig
      */
-    public function getThumbConfig()
+    private function getThumbConfig()
     {
-        if (empty($this->_thumbConfig))
-            $this->_thumbConfig = ThumbConfig::getInstance($this->config);
-
-        return $this->_thumbConfig;
+        return new ThumbConfig($this->config);
     }
 
     /**
@@ -126,40 +116,43 @@ class Thumb extends BaseObject
      */
     public function create()
     {
-        $ImageDriver = ImageDriver::getInstance($this->file, [
-            'driver' => $this->driver,
-        ]);
+        $ImageDriver = new ImageDriver(['driver' => $this->driver]);
+        $ImageDriver = $ImageDriver->load($this->file);
 
+        $config = $this->getThumbConfig();
         $thisImageSize = getimagesize($this->file);
 
-        if ($thisImageSize[0] < $this->getThumbConfig()->width) {
-            $ImageDriver->sharpen($this->getThumbConfig()->width - $thisImageSize[0]);
+        if ($thisImageSize[0] < $config->width) {
+            $ImageDriver->sharpen($config->width - $thisImageSize[0]);
         }
 
-        $ImageDriver->resize(null, $this->getThumbConfig()->height);
+        $ImageDriver->resize(null, $config->height);
 
-        if ($this->getThumbConfig()->crop)
-            $ImageDriver->crop($this->getThumbConfig()->width, $this->getThumbConfig()->height);
+        if ($config->crop)
+            $ImageDriver->crop($config->width, $config->height);
 
-        if ($this->getThumbConfig()->watermark) {
-            $watermark = ImageDriver::getInstance($this->watermarkFile);
+        if ($config->watermark) {
+            $watermark = new ImageDriver(['driver' => $this->driver]);
+            $watermark = $watermark->load($this->watermarkFile);
             $watermark->resize($ImageDriver->width, null);
             $ImageDriver->watermark(
                 $watermark, null, null,
-                $this->getThumbConfig()->watermarkOpacity
+                $config->watermarkOpacity
             );
+
+            unset($watermark);
         }
 
-        $ImageDriver->resize($this->getThumbConfig()->width, null);
+        $ImageDriver->resize($config->width, null);
 
-        if ($this->getThumbConfig()->crop && $ImageDriver->height > $this->getThumbConfig()->height) {
-            $ImageDriver->crop($this->getThumbConfig()->width, $this->getThumbConfig()->height);
+        if ($config->crop && $ImageDriver->height > $config->height) {
+            $ImageDriver->crop($config->width, $config->height);
         }
 
-        if ($ImageDriver->save($this->outFile, $this->getThumbConfig()->quality)) {
+        if ($ImageDriver->save($this->outFile, $config->quality)) {
+            unset($ImageDriver);
             return $this->outFile;
         }
-
         throw new ErrorException("error saving file: {$this->outFile}");
     }
 

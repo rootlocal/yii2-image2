@@ -68,9 +68,7 @@ class ThumbConfig extends BaseObject
      */
     public static function getInstance(array $config = [])
     {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self($config);
-        }
+        self::$instance = new self($config);
         return self::$instance;
     }
 

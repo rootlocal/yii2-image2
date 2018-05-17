@@ -54,7 +54,7 @@ class ImageDriver extends \yii\image\ImageDriver
     /**
      * @param $file null|string
      * @param $driver null|string
-     * @return mixed object Image_GD or object Image_Imagick
+     * @return \image\components\drivers\Driver
      * @throws \yii\base\ErrorException
      */
     public function load($file = null, $driver = null)
@@ -70,10 +70,7 @@ class ImageDriver extends \yii\image\ImageDriver
      */
     public static function getInstance($file, array $config = [])
     {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self($config);
-        }
-
+        self::$instance = new self($config);
         return self::$instance->load($file);
     }
 
