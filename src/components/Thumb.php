@@ -67,7 +67,7 @@ class Thumb extends BaseObject
      * default driver: GD, Imagick
      * @var  string
      */
-    public $driver = 'Imagick';
+    public $driver = 'GD';
 
     /**
      * @var ThumbConfig

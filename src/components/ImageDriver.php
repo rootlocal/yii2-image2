@@ -44,7 +44,7 @@ class ImageDriver extends \yii\image\ImageDriver
     /**
      * @var  string  default driver: GD, Imagick
      */
-    public $driver = 'Imagick';
+    public $driver = 'GD';
 
     /**
      * @var ImageDriver
