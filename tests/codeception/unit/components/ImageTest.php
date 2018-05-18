@@ -14,6 +14,17 @@ use Codeception\Util\Fixtures;
 class ImageTest extends TestCase
 {
     /**
+     * @inheritdoc
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        if (!extension_loaded('gd')) {
+            $this->markTestSkipped('The GD extension is not available.');
+        }
+    }
+
+    /**
      * @throws \yii\base\ErrorException
      */
     public function testImageCreateNew()

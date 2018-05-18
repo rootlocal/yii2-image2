@@ -19,14 +19,92 @@
 
 namespace image\components\drivers;
 
-use \yii\image\drivers\Kohana_Image;
+use yii\base\ErrorException;
 
 /**
- * Class Image
+ * Class Driver
  * @package image\components\drivers
  */
-class Driver extends Kohana_Image implements DriverInterface
+class Driver implements DriverInterface
 {
+    // Resizing constraints
+    const NONE = 0x01;
+    const WIDTH = 0x02;
+    const HEIGHT = 0x03;
+    const AUTO = 0x04;
+    const INVERSE = 0x05;
+    const PRECISE = 0x06;
+    const ADAPT = 0x07;
+    const CROP = 0x08;
+
+    // Flipping directions
+    const HORIZONTAL = 0x11;
+    const VERTICAL = 0x12;
+
+    // Status of the driver check
+    protected static $_checked = FALSE;
+
+    /**
+     * @var  string  image file path
+     */
+    public $file;
+
+    /**
+     * @var  integer  image width
+     */
+    public $width;
+
+    /**
+     * @var  integer  image height
+     */
+    public $height;
+
+    /**
+     * @var  integer  one of the IMAGETYPE_* constants
+     */
+    public $type;
+
+    /**
+     * @var  string  mime type of the image
+     */
+    public $mime;
+
+
+    /**
+     * Loads information about the image. Will throw an exception if the image
+     * does not exist or is not an image.
+     *
+     * @param   string $file image file path
+     * @return  void
+     * @throws  ErrorException
+     */
+    public function __construct($file)
+    {
+        $info = [];
+
+        try {
+            // Get the real path to the file
+            $file = realpath($file);
+
+            // Get the image information
+            $info = getimagesize($file);
+            // Store the image information
+
+
+        } catch (\Exception $e) {
+            // Ignore all errors while reading the image
+        }
+
+        if (empty($file) OR empty($info)) {
+            throw new ErrorException(sprintf('Not an image or invalid image: %s', $file));
+        }
+
+        $this->file = $file;
+        $this->width = $info[0];
+        $this->height = $info[1];
+        $this->type = $info[2];
+        $this->mime = image_type_to_mime_type($this->type);
+    }
 
     /**
      * Execute a resize.
@@ -35,9 +113,8 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $height new height
      * @return  void
      */
-    protected function _do_resize($width, $height)
+    public function _do_resize($width, $height)
     {
-        parent::_do_resize($width, $height);
     }
 
     /**
@@ -49,10 +126,10 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $bg_height background height
      * @param   integer $offset_x offset from the left
      * @param   integer $offset_y offset from the top
+     * @return void
      */
-    protected function _do_adapt($width, $height, $bg_width, $bg_height, $offset_x, $offset_y)
+    public function _do_adapt($width, $height, $bg_width, $bg_height, $offset_x, $offset_y)
     {
-        parent::_do_adapt($width, $height, $bg_width, $bg_height, $offset_x, $offset_y);
     }
 
     /**
@@ -64,9 +141,8 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $offset_y offset from the top
      * @return  void
      */
-    protected function _do_crop($width, $height, $offset_x, $offset_y)
+    public function _do_crop($width, $height, $offset_x, $offset_y)
     {
-        parent::_do_crop($width, $height, $offset_x, $offset_y);
     }
 
     /**
@@ -75,9 +151,8 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $degrees degrees to rotate
      * @return  void
      */
-    protected function _do_rotate($degrees)
+    public function _do_rotate($degrees)
     {
-        parent::_do_rotate($degrees);
     }
 
     /**
@@ -86,9 +161,8 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $direction direction to flip
      * @return  void
      */
-    protected function _do_flip($direction)
+    public function _do_flip($direction)
     {
-        parent::_do_flip($direction);
     }
 
     /**
@@ -97,9 +171,8 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $amount amount to sharpen
      * @return  void
      */
-    protected function _do_sharpen($amount)
+    public function _do_sharpen($amount)
     {
-        parent::_do_sharpen($amount);
     }
 
     /**
@@ -110,23 +183,21 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   boolean $fade_in TRUE to fade out, FALSE to fade in
      * @return  void
      */
-    protected function _do_reflection($height, $opacity, $fade_in)
+    public function _do_reflection($height, $opacity, $fade_in)
     {
-        parent::_do_reflection($height, $opacity, $fade_in);
     }
 
     /**
      * Execute a watermarking.
      *
-     * @param   Kohana_Image $image watermarking Kohana_Image
+     * @param   \image\components\Kohana\Image $image watermarking
      * @param   integer $offset_x offset from the left
      * @param   integer $offset_y offset from the top
      * @param   integer $opacity opacity of watermark
      * @return  void
      */
-    protected function _do_watermark(Kohana_Image $image, $offset_x, $offset_y, $opacity)
+    public function _do_watermark(\image\components\Kohana\Image $image, $offset_x, $offset_y, $opacity)
     {
-        parent::_do_watermark($image, $offset_x, $offset_y, $opacity);
     }
 
     /**
@@ -138,9 +209,8 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $opacity opacity
      * @return void
      */
-    protected function _do_background($r, $g, $b, $opacity)
+    public function _do_background($r, $g, $b, $opacity)
     {
-        parent::_do_background($r, $g, $b, $opacity);
     }
 
     /**
@@ -150,9 +220,9 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $quality quality
      * @return  boolean
      */
-    protected function _do_save($file, $quality)
+    public function _do_save($file, $quality)
     {
-        return parent::_do_save($file, $quality);
+        return false;
     }
 
     /**
@@ -162,9 +232,9 @@ class Driver extends Kohana_Image implements DriverInterface
      * @param   integer $quality quality
      * @return  string
      */
-    protected function _do_render($type, $quality)
+    public function _do_render($type, $quality)
     {
-        return parent::_do_render($type, $quality);
+        return '';
     }
 
 }

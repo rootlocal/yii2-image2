@@ -67,7 +67,7 @@ class Thumb extends BaseObject
      * default driver: GD, Imagick
      * @var  string
      */
-    public $driver = 'GD';
+    public $driver;
 
     /**
      * @var Thumb
@@ -116,7 +116,7 @@ class Thumb extends BaseObject
      */
     public function create()
     {
-        $ImageDriver = new ImageDriver(['driver' => $this->driver]);
+        $ImageDriver = new Image(['driver' => $this->driver]);
         $ImageDriver = $ImageDriver->load($this->file);
 
         $config = $this->getThumbConfig();
@@ -132,7 +132,7 @@ class Thumb extends BaseObject
             $ImageDriver->crop($config->width, $config->height);
 
         if ($config->watermark) {
-            $watermark = new ImageDriver(['driver' => $this->driver]);
+            $watermark = new Image(['driver' => $this->driver]);
             $watermark = $watermark->load($this->watermarkFile);
             $watermark->resize($ImageDriver->width, null);
             $ImageDriver->watermark(

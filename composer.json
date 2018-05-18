@@ -16,8 +16,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "yiisoft/yii2": "~2.0.0",
-    "yurkinx/yii2-image": "dev-master"
+    "yiisoft/yii2": "~2.0.0"
   },
   "require-dev": {
     "yiisoft/yii2-codeception": "~2.0"

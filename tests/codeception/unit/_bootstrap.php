@@ -50,3 +50,14 @@ Fixtures::add('thumb4', [
         'crop' => false,
         'quality' => 30,
     ]]);
+
+Fixtures::add('imagick', [
+    'driver' => 'Imagick',
+    'file' => Yii::getAlias('@img/default.jpg'),
+    'outFile' => Yii::getAlias('@assets/test_' . uniqid() . '.jpg'),
+    'config' => [
+        'width' => 234,
+        'height' => 552,
+        'crop' => true,
+        'quality' => 30,
+    ]]);

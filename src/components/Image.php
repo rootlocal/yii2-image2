@@ -19,53 +19,54 @@
 
 namespace image\components;
 
-use \image\components\drivers\Driver as Image;
+use \image\components\Kohana\Image as KohanaImage;
+use yii\base\ErrorException;
+use yii\base\BaseObject;
 
 /**
- * Class ImageDriver
+ * Class Image
  * @package image\components
  */
-class ImageDriver extends \yii\image\ImageDriver
+class Image extends BaseObject
 {
-    // Resizing constraints
-    const NONE = Image::NONE;
-    const WIDTH = Image::WIDTH;
-    const HEIGHT = Image::HEIGHT;
-    const AUTO = IMAGE::AUTO;
-    const INVERSE = IMAGE::INVERSE;
-    const PRECISE = IMAGE::PRECISE;
-    const ADAPT = IMAGE::ADAPT;
-    const CROP = IMAGE::CROP;
-
-    // Flipping directions
-    const HORIZONTAL = IMAGE::HORIZONTAL;
-    const VERTICAL = IMAGE::VERTICAL;
 
     /**
      * @var  string  default driver: GD, Imagick
      */
-    public $driver = 'GD';
+    public $driver;
 
     /**
-     * @var ImageDriver
+     * @var Image
      */
     private static $instance;
 
     /**
-     * @param $file null|string
-     * @param $driver null|string
-     * @return \image\components\drivers\Driver
-     * @throws \yii\base\ErrorException
+     * Loads the image to Image object
+     * @param string $file the file path to the image
+     * @param string $driver the image driver to use: GD or ImageMagick
+     * @throws ErrorException if filename is empty or file doesn't exist
+     * @return \image\components\Kohana\Image
      */
     public function load($file = null, $driver = null)
     {
-        return parent::load($file, $driver);
+        if (empty($driver))
+            $driver = $this->driver;
+
+        if (empty($file)) {
+            throw new ErrorException('File name can not be empty');
+        }
+
+        if (!realpath($file)) {
+            throw new ErrorException(sprintf('The file does\'t exist: %s', $file));
+        }
+
+        return KohanaImage::factory($file, $driver ? $driver : $this->driver);
     }
 
     /**
      * @param $file string
      * @param array $config
-     * @return \image\components\drivers\Driver
+     * @return \image\components\Kohana\Image
      * @throws \yii\base\ErrorException
      */
     public static function getInstance($file, array $config = [])
