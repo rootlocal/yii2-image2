@@ -302,6 +302,10 @@ class Image_Imagick extends Image implements DriverInterface
         // Set the output quality
         $this->im->setImageCompressionQuality($quality);
 
+        // Sets the image compression
+        // progressive jpeg
+        $this->im->setInterlaceScheme(Imagick::INTERLACE_PLANE);
+
         if ($this->im->writeImage($file)) {
             // Reset the image type and mime type
             $this->type = $type;

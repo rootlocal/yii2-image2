@@ -544,6 +544,10 @@ class Image_GD extends Image implements DriverInterface
         // Get the save function and IMAGETYPE
         list($save, $type) = $this->_save_function($extension, $quality);
 
+        // Enable interlace
+        // progressive jpeg
+        imageinterlace($this->_image, true);
+
         // Save the image to a file
         $status = isset($quality) ? $save($this->_image, $file, $quality) : $save($this->_image, $file);
 
