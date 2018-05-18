@@ -2,7 +2,7 @@ YII2 Image
 ==========
 extension
 
-[![Build Status](https://img.shields.io/travis/rootlocal/yii2-image.svg)](http://travis-ci.org/rootlocal/yii2-image)
+[![Build Status](https://img.shields.io/travis/rootlocal/yii2-image2.svg)](http://travis-ci.org/rootlocal/yii2-image2)
 
 Installation
 ------------
