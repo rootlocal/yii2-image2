@@ -3,6 +3,8 @@ YII2 Image
 extension
 
 [![Build Status](https://img.shields.io/travis/rootlocal/yii2-image2.svg)](http://travis-ci.org/rootlocal/yii2-image2)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1ec392561ef916032357/maintainability)](https://codeclimate.com/github/rootlocal/yii2-image2/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/1ec392561ef916032357/test_coverage)](https://codeclimate.com/github/rootlocal/yii2-image2/test_coverage)
 
 Installation
 ------------
