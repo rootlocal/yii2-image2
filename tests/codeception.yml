@@ -28,4 +28,8 @@ coverage:
     enabled: true
     whitelist:
         include:
-            - /../src/components/*
+            - /../src/*
+        exclude:
+                - /../src/messages/*
+                - /../src/Bootstrap.php
+                - /../src/Image.php
