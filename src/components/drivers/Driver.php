@@ -42,7 +42,7 @@ class Driver implements DriverInterface
     const VERTICAL = 0x12;
 
     // Status of the driver check
-    protected static $_checked = FALSE;
+    protected static $_checked = false;
 
     /**
      * @var  string  image file path
@@ -95,7 +95,7 @@ class Driver implements DriverInterface
             // Ignore all errors while reading the image
         }
 
-        if (empty($file) OR empty($info)) {
+        if (empty($file) || empty($info)) {
             throw new ErrorException(sprintf('Not an image or invalid image: %s', $file));
         }
 
@@ -180,7 +180,7 @@ class Driver implements DriverInterface
      *
      * @param   integer $height reflection height
      * @param   integer $opacity reflection opacity
-     * @param   boolean $fade_in TRUE to fade out, FALSE to fade in
+     * @param   boolean $fade_in true to fade out, false to fade in
      * @return  void
      */
     public function _do_reflection($height, $opacity, $fade_in)

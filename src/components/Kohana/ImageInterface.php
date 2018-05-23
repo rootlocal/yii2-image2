@@ -36,10 +36,10 @@ interface ImageInterface
      *     $image->resize(200, 200, Image::INVERSE);
      *
      *     // Resize to 500 pixel width, keeping aspect ratio
-     *     $image->resize(500, NULL);
+     *     $image->resize(500, null);
      *
      *     // Resize to 500 pixel height, keeping aspect ratio
-     *     $image->resize(NULL, 500);
+     *     $image->resize(null, 500);
      *
      *     // Resize to 200x500 pixels, ignoring aspect ratio
      *     $image->resize(200, 500, Image::NONE);
@@ -55,14 +55,14 @@ interface ImageInterface
      * @return  $this
      * @uses    Image::_do_resize
      */
-    public function resize($width = NULL, $height = NULL, $master = NULL);
+    public function resize($width = null, $height = null, $master = null);
 
     /**
      * Crop an image to the given size. Either the width or the height can be
      * omitted and the current width or height will be used.
      *
      * If no offset is specified, the center of the axis will be used.
-     * If an offset of TRUE is specified, the bottom of the axis will be used.
+     * If an offset of true is specified, the bottom of the axis will be used.
      *
      *     // Crop the image to 200x200 pixels, from the center
      *     $image->crop(200, 200);
@@ -74,7 +74,7 @@ interface ImageInterface
      * @return  $this
      * @uses    Image::_do_crop
      */
-    public function crop($width, $height, $offset_x = NULL, $offset_y = NULL);
+    public function crop($width, $height, $offset_x = null, $offset_y = null);
 
     /**
      * Rotate the image by a given amount.
@@ -127,32 +127,32 @@ interface ImageInterface
      *     $image->reflection(50);
      *
      *     // Create a 50 pixel reflection that fades from 100-0% opacity
-     *     $image->reflection(50, 100, TRUE);
+     *     $image->reflection(50, 100, true);
      *
      *     // Create a 50 pixel reflection that fades from 0-60% opacity
-     *     $image->reflection(50, 60, TRUE);
+     *     $image->reflection(50, 60, true);
      *
      * [!!] By default, the reflection will be go from transparent at the top
      * to opaque at the bottom.
      *
      * @param   integer $height reflection height
      * @param   integer $opacity reflection opacity: 0-100
-     * @param   boolean $fade_in TRUE to fade in, FALSE to fade out
+     * @param   boolean $fade_in true to fade in, false to fade out
      * @return  $this
      * @uses    Image::_do_reflection
      */
-    public function reflection($height = NULL, $opacity = 100, $fade_in = FALSE);
+    public function reflection($height = null, $opacity = 100, $fade_in = false);
 
     /**
      * Add a watermark to an image with a specified opacity. Alpha transparency
      * will be preserved.
      *
      * If no offset is specified, the center of the axis will be used.
-     * If an offset of TRUE is specified, the bottom of the axis will be used.
+     * If an offset of true is specified, the bottom of the axis will be used.
      *
      *     // Add a watermark to the bottom right of the image
      *     $mark = Image::factory('upload/watermark.png');
-     *     $image->watermark($mark, TRUE, TRUE);
+     *     $image->watermark($mark, true, true);
      *
      * @param   Image $watermark watermark Image instance
      * @param   integer $offset_x offset from the left
@@ -161,7 +161,7 @@ interface ImageInterface
      * @return  $this
      * @uses    Image::_do_watermark
      */
-    public function watermark(Image $watermark, $offset_x = NULL, $offset_y = NULL, $opacity = 100);
+    public function watermark(Image $watermark, $offset_x = null, $offset_y = null, $opacity = 100);
 
     /**
      * Set the background color of an image. This is only useful for images
@@ -201,13 +201,13 @@ interface ImageInterface
      * @uses    Image::_save
      * @throws  \yii\base\ErrorException
      */
-    public function save($file = NULL, $quality = 100);
+    public function save($file = null, $quality = 100);
 
     /**
      * Render the image and return the binary string.
      *
      *     // Render the image at 50% quality
-     *     $data = $image->render(NULL, 50);
+     *     $data = $image->render(null, 50);
      *
      *     // Render the image as a PNG
      *     $data = $image->render('png');
@@ -217,6 +217,6 @@ interface ImageInterface
      * @return  string
      * @uses    Image::_do_render
      */
-    public function render($type = NULL, $quality = 100);
+    public function render($type = null, $quality = 100);
 
 }

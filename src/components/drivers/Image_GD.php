@@ -65,7 +65,7 @@ class Image_GD extends Image implements DriverInterface
             throw new ErrorException(sprintf('Image_GD requires GD version 2.0.1 or greater, you have %s', $version));
         }
 
-        return Image_GD::$_checked = TRUE;
+        return Image_GD::$_checked = true;
     }
 
     /* @var resource Temporary image resource */
@@ -103,8 +103,8 @@ class Image_GD extends Image implements DriverInterface
                 break;
         }
 
-        if (!isset($create) OR !function_exists($create)) {
-            throw new ErrorException(sprintf('Installed GD does not support %s images', image_type_to_extension($this->type, FALSE)));
+        if (!isset($create) || !function_exists($create)) {
+            throw new ErrorException(sprintf('Installed GD does not support %s images', image_type_to_extension($this->type, false)));
         }
 
         // Save function for future use
@@ -142,7 +142,7 @@ class Image_GD extends Image implements DriverInterface
             $this->_image = $create($this->file);
 
             // Preserve transparency when saving
-            imagesavealpha($this->_image, TRUE);
+            imagesavealpha($this->_image, true);
         }
     }
 
@@ -163,12 +163,12 @@ class Image_GD extends Image implements DriverInterface
         $this->_load_image();
 
         // Test if we can do a resize without resampling to speed up the final resize
-        if ($width > ($this->width / 2) AND $height > ($this->height / 2)) {
+        if ($width > ($this->width / 2) && $height > ($this->height / 2)) {
             // The maximum reduction is 10% greater than the final size
             $reduction_width = round($width * 1.1);
             $reduction_height = round($height * 1.1);
 
-            while ($pre_width / 2 > $reduction_width AND $pre_height / 2 > $reduction_height) {
+            while ($pre_width / 2 > $reduction_width && $pre_height / 2 > $reduction_height) {
                 // Reduce the size using an O(2n) algorithm, until it reaches the maximum reduction
                 $pre_width /= 2;
                 $pre_height /= 2;
@@ -278,7 +278,7 @@ class Image_GD extends Image implements DriverInterface
         $image = imagerotate($this->_image, 360 - $degrees, $transparent, 1);
 
         // Save the alpha of the rotated image
-        imagesavealpha($image, TRUE);
+        imagesavealpha($image, true);
 
         // Get the width and height of the rotated image
         $width = imagesx($image);
@@ -370,7 +370,7 @@ class Image_GD extends Image implements DriverInterface
      *
      * @param   integer $height reflection height
      * @param   integer $opacity reflection opacity
-     * @param   boolean $fade_in TRUE to fade out, FALSE to fade in
+     * @param   boolean $fade_in true to fade out, false to fade in
      * @return  void
      * @throws ErrorException
      */
@@ -407,7 +407,7 @@ class Image_GD extends Image implements DriverInterface
             // Place the line at the bottom of the reflection
             $dst_y = $this->height + $offset;
 
-            if ($fade_in === TRUE) {
+            if ($fade_in === true) {
                 // Start with the most transparent line first
                 $dst_opacity = round($opacity + ($stepping * ($height - $offset)));
             } else {
@@ -459,7 +459,7 @@ class Image_GD extends Image implements DriverInterface
         // Create the watermark image resource
         $overlay = imagecreatefromstring($watermark->render());
 
-        imagesavealpha($overlay, TRUE);
+        imagesavealpha($overlay, true);
 
         // Get the width and height of the watermark
         $width = imagesx($overlay);
@@ -480,7 +480,7 @@ class Image_GD extends Image implements DriverInterface
         }
 
         // Alpha blending must be enabled on the background!
-        imagealphablending($this->_image, TRUE);
+        imagealphablending($this->_image, true);
 
         if (imagecopy($this->_image, $overlay, $offset_x, $offset_y, 0, 0, $width, $height)) {
             // Destroy the overlay image
@@ -515,7 +515,7 @@ class Image_GD extends Image implements DriverInterface
         imagefilledrectangle($background, 0, 0, $this->width, $this->height, $color);
 
         // Alpha blending must be enabled on the background!
-        imagealphablending($background, TRUE);
+        imagealphablending($background, true);
 
         // Copy the image onto a white background to remove all transparency
         if (imagecopy($background, $this->_image, 0, 0, 0, 0, $this->width, $this->height)) {
@@ -551,13 +551,13 @@ class Image_GD extends Image implements DriverInterface
         // Save the image to a file
         $status = isset($quality) ? $save($this->_image, $file, $quality) : $save($this->_image, $file);
 
-        if ($status === TRUE AND $type !== $this->type) {
+        if ($status === true && $type !== $this->type) {
             // Reset the image type and mime type
             $this->type = $type;
             $this->mime = image_type_to_mime_type($type);
         }
 
-        return TRUE;
+        return true;
     }
 
     /**
@@ -580,9 +580,9 @@ class Image_GD extends Image implements DriverInterface
         ob_start();
 
         // Render the image
-        $status = isset($quality) ? $save($this->_image, NULL, $quality) : $save($this->_image, NULL);
+        $status = isset($quality) ? $save($this->_image, null, $quality) : $save($this->_image, null);
 
-        if ($status === TRUE AND $type !== $this->type) {
+        if ($status === true && $type !== $this->type) {
             // Reset the image type and mime type
             $this->type = $type;
             $this->mime = image_type_to_mime_type($type);
@@ -604,7 +604,7 @@ class Image_GD extends Image implements DriverInterface
     {
         if (!$extension) {
             // Use the current image type
-            $extension = image_type_to_extension($this->type, FALSE);
+            $extension = image_type_to_extension($this->type, false);
         }
 
         switch (strtolower($extension)) {
@@ -620,7 +620,7 @@ class Image_GD extends Image implements DriverInterface
                 $type = IMAGETYPE_GIF;
 
                 // GIFs do not a quality setting
-                $quality = NULL;
+                $quality = null;
                 break;
             case 'png':
                 // Save a PNG file
@@ -651,10 +651,10 @@ class Image_GD extends Image implements DriverInterface
         $image = imagecreatetruecolor($width, $height);
 
         // Do not apply alpha blending
-        imagealphablending($image, FALSE);
+        imagealphablending($image, false);
 
         // Save alpha levels
-        imagesavealpha($image, TRUE);
+        imagesavealpha($image, true);
 
         return $image;
     }

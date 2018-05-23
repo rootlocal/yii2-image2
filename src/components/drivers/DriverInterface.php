@@ -88,7 +88,7 @@ interface DriverInterface
      *
      * @param   integer $height reflection height
      * @param   integer $opacity reflection opacity
-     * @param   boolean $fade_in TRUE to fade out, FALSE to fade in
+     * @param   boolean $fade_in true to fade out, false to fade in
      * @return  void
      */
     public function _do_reflection($height, $opacity, $fade_in);

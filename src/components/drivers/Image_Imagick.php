@@ -36,7 +36,7 @@ class Image_Imagick extends Image implements DriverInterface
             throw new ErrorException('Imagick is not installed, or the extension is not loaded');
         }
 
-        return Image_Imagick::$_checked = TRUE;
+        return Image_Imagick::$_checked = true;
     }
 
     /**
@@ -95,10 +95,10 @@ class Image_Imagick extends Image implements DriverInterface
             $this->width = $this->im->getImageWidth();
             $this->height = $this->im->getImageHeight();
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -134,10 +134,10 @@ class Image_Imagick extends Image implements DriverInterface
             // Trim off hidden areas
             $this->im->setImagePage($this->width, $this->height, 0, 0);
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     public function _do_rotate($degrees)
@@ -150,10 +150,10 @@ class Image_Imagick extends Image implements DriverInterface
             // Trim off hidden areas
             $this->im->setImagePage($this->width, $this->height, 0, 0);
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     public function _do_flip($direction)
@@ -216,7 +216,7 @@ class Image_Imagick extends Image implements DriverInterface
 
         // Place the image and reflection into the container
         if ($image->compositeImage($this->im, Imagick::COMPOSITE_SRC, 0, 0)
-            AND $image->compositeImage($reflection, Imagick::COMPOSITE_OVER, 0, $this->height)) {
+            && $image->compositeImage($reflection, Imagick::COMPOSITE_OVER, 0, $this->height)) {
             // Replace the current image with the reflected image
             $this->im = $image;
 
@@ -224,10 +224,10 @@ class Image_Imagick extends Image implements DriverInterface
             $this->width = $this->im->getImageWidth();
             $this->height = $this->im->getImageHeight();
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -285,10 +285,10 @@ class Image_Imagick extends Image implements DriverInterface
             // Replace the current image with the new image
             $this->im = $background;
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     public function _do_save($file, $quality)
@@ -311,10 +311,10 @@ class Image_Imagick extends Image implements DriverInterface
             $this->type = $type;
             $this->mime = image_type_to_mime_type($type);
 
-            return TRUE;
+            return true;
         }
 
-        return FALSE;
+        return false;
     }
 
     public function _do_render($type, $quality)

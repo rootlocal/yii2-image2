@@ -6,38 +6,41 @@ php:
   - 5.6
   - 7.0
 
-# faster builds on new travis setup not using sudo
 sudo: false
 
-# cache vendor dirs
+services:
+  - mysql
+
 cache:
   directories:
     - $HOME/.composer/cache
+    - vendor/
 
 before_install:
   - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
+  - composer global require squizlabs/php_codesniffer --no-suggest
 
 install:
   - travis_retry composer self-update && composer --version
   - travis_retry composer global require "fxp/composer-asset-plugin:~1.3"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - travis_retry composer install --dev --prefer-dist --no-interaction
-# codeception
   - travis_retry composer global require "codeception/codeception=2.0.*" "codeception/specify=*" "codeception/verify=*"
-# setup application:
   - |
     cd tests
     codecept build
     cd ..
 
 before_script:
-#  - mysql --version
-  # initialize databases
-#  - mysql -e 'CREATE DATABASE image_test;';
+  - pear config-set preferred_state beta
+  - pecl channel-update pecl.php.net
+  - yes | pecl install imagick
+  - php -m
+  - mysql --version
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS image_test;'
+  - mysql -e 'GRANT ALL ON image_test.* TO travis;'
+  - 'export PATH="${PATH}:${HOME}/.composer/vendor/bin"'
 
-after_script:
-  - vendor/bin/test-reporter --coverage-report=tests/codeception/_output/coverage.xml
-  
 script:
   - |
     chmod -R 0777 tests/runtime
@@ -47,6 +50,10 @@ script:
     cd ..
     codecept run --coverage --coverage-xml
     cd ..
+    phpcs -p -n
+
+after_script:
+  - vendor/bin/test-reporter --coverage-report=tests/codeception/_output/coverage.xml
 
 env:
   global:

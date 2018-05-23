@@ -31,9 +31,9 @@ class Image extends Driver implements ImageInterface
      * @return  Image
      * @uses    Image::$default_driver
      */
-    public static function factory($file, $driver = NULL)
+    public static function factory($file, $driver = null)
     {
-        if ($driver === NULL) {
+        if ($driver === null) {
 
             // Use the default driver
             $driver = Image::$default_driver;
@@ -88,10 +88,10 @@ class Image extends Driver implements ImageInterface
      *     $image->resize(200, 200, Image::INVERSE);
      *
      *     // Resize to 500 pixel width, keeping aspect ratio
-     *     $image->resize(500, NULL);
+     *     $image->resize(500, null);
      *
      *     // Resize to 500 pixel height, keeping aspect ratio
-     *     $image->resize(NULL, 500);
+     *     $image->resize(null, 500);
      *
      *     // Resize to 200x500 pixels, ignoring aspect ratio
      *     $image->resize(200, 500, Image::NONE);
@@ -107,9 +107,9 @@ class Image extends Driver implements ImageInterface
      * @return  $this
      * @uses    Image::_do_resize
      */
-    public function resize($width = NULL, $height = NULL, $master = NULL)
+    public function resize($width = null, $height = null, $master = null)
     {
-        if ($master === NULL) {
+        if ($master === null) {
             // Choose the master dimension automatically
             $master = Image::AUTO;
         } elseif ($master === Image::CROP) {
@@ -130,16 +130,16 @@ class Image extends Driver implements ImageInterface
         }
         // Image::WIDTH and Image::HEIGHT deprecated. You can use it in old projects,
         // but in new you must pass empty value for non-master dimension
-        elseif ($master == Image::WIDTH AND !empty($width)) {
+        elseif ($master == Image::WIDTH && !empty($width)) {
             $master = Image::AUTO;
 
             // Set empty height for backward compatibility
-            $height = NULL;
-        } elseif ($master == Image::HEIGHT AND !empty($height)) {
+            $height = null;
+        } elseif ($master == Image::HEIGHT && !empty($height)) {
             $master = Image::AUTO;
 
             // Set empty width for backward compatibility
-            $width = NULL;
+            $width = null;
         } elseif ($master === Image::ADAPT) {
             if (empty($width)) {
                 $width = $this->width * $height / $this->height;
@@ -232,7 +232,7 @@ class Image extends Driver implements ImageInterface
      * omitted and the current width or height will be used.
      *
      * If no offset is specified, the center of the axis will be used.
-     * If an offset of TRUE is specified, the bottom of the axis will be used.
+     * If an offset of true is specified, the bottom of the axis will be used.
      *
      *     // Crop the image to 200x200 pixels, from the center
      *     $image->crop(200, 200);
@@ -244,7 +244,7 @@ class Image extends Driver implements ImageInterface
      * @return  $this
      * @uses    Image::_do_crop
      */
-    public function crop($width, $height, $offset_x = NULL, $offset_y = NULL)
+    public function crop($width, $height, $offset_x = null, $offset_y = null)
     {
         if ($width > $this->width) {
             // Use the current width
@@ -256,10 +256,10 @@ class Image extends Driver implements ImageInterface
             $height = $this->height;
         }
 
-        if ($offset_x === NULL) {
+        if ($offset_x === null) {
             // Center the X offset
             $offset_x = round(($this->width - $width) / 2);
-        } elseif ($offset_x === TRUE) {
+        } elseif ($offset_x === true) {
             // Bottom the X offset
             $offset_x = $this->width - $width;
         } elseif ($offset_x < 0) {
@@ -267,10 +267,10 @@ class Image extends Driver implements ImageInterface
             $offset_x = $this->width - $width + $offset_x;
         }
 
-        if ($offset_y === NULL) {
+        if ($offset_y === null) {
             // Center the Y offset
             $offset_y = round(($this->height - $height) / 2);
-        } elseif ($offset_y === TRUE) {
+        } elseif ($offset_y === true) {
             // Bottom the Y offset
             $offset_y = $this->height - $height;
         } elseif ($offset_y < 0) {
@@ -388,23 +388,23 @@ class Image extends Driver implements ImageInterface
      *     $image->reflection(50);
      *
      *     // Create a 50 pixel reflection that fades from 100-0% opacity
-     *     $image->reflection(50, 100, TRUE);
+     *     $image->reflection(50, 100, true);
      *
      *     // Create a 50 pixel reflection that fades from 0-60% opacity
-     *     $image->reflection(50, 60, TRUE);
+     *     $image->reflection(50, 60, true);
      *
      * [!!] By default, the reflection will be go from transparent at the top
      * to opaque at the bottom.
      *
      * @param   integer $height reflection height
      * @param   integer $opacity reflection opacity: 0-100
-     * @param   boolean $fade_in TRUE to fade in, FALSE to fade out
+     * @param   boolean $fade_in true to fade in, false to fade out
      * @return  $this
      * @uses    Image::_do_reflection
      */
-    public function reflection($height = NULL, $opacity = 100, $fade_in = FALSE)
+    public function reflection($height = null, $opacity = 100, $fade_in = false)
     {
-        if ($height === NULL OR $height > $this->height) {
+        if ($height === null || $height > $this->height) {
             // Use the current height
             $height = $this->height;
         }
@@ -422,11 +422,11 @@ class Image extends Driver implements ImageInterface
      * will be preserved.
      *
      * If no offset is specified, the center of the axis will be used.
-     * If an offset of TRUE is specified, the bottom of the axis will be used.
+     * If an offset of true is specified, the bottom of the axis will be used.
      *
      *     // Add a watermark to the bottom right of the image
      *     $mark = Image::factory('upload/watermark.png');
-     *     $image->watermark($mark, TRUE, TRUE);
+     *     $image->watermark($mark, true, true);
      *
      * @param   Image $watermark watermark Image instance
      * @param   integer $offset_x offset from the left
@@ -435,12 +435,12 @@ class Image extends Driver implements ImageInterface
      * @return  $this
      * @uses    Image::_do_watermark
      */
-    public function watermark(Image $watermark, $offset_x = NULL, $offset_y = NULL, $opacity = 100)
+    public function watermark(Image $watermark, $offset_x = null, $offset_y = null, $opacity = 100)
     {
-        if ($offset_x === NULL) {
+        if ($offset_x === null) {
             // Center the X offset
             $offset_x = round(($this->width - $watermark->width) / 2);
-        } elseif ($offset_x === TRUE) {
+        } elseif ($offset_x === true) {
             // Bottom the X offset
             $offset_x = $this->width - $watermark->width;
         } elseif ($offset_x < 0) {
@@ -448,10 +448,10 @@ class Image extends Driver implements ImageInterface
             $offset_x = $this->width - $watermark->width + $offset_x;
         }
 
-        if ($offset_y === NULL) {
+        if ($offset_y === null) {
             // Center the Y offset
             $offset_y = round(($this->height - $watermark->height) / 2);
-        } elseif ($offset_y === TRUE) {
+        } elseif ($offset_y === true) {
             // Bottom the Y offset
             $offset_y = $this->height - $watermark->height;
         } elseif ($offset_y < 0) {
@@ -526,9 +526,9 @@ class Image extends Driver implements ImageInterface
      * @uses    Image::_save
      * @throws  \yii\base\ErrorException
      */
-    public function save($file = NULL, $quality = 100)
+    public function save($file = null, $quality = 100)
     {
-        if ($file === NULL) {
+        if ($file === null) {
             // Overwrite the file
             $file = $this->file;
         }
@@ -541,7 +541,7 @@ class Image extends Driver implements ImageInterface
             // Get the directory of the file
             $directory = realpath(pathinfo($file, PATHINFO_DIRNAME));
 
-            if (!is_dir($directory) OR !is_writable($directory)) {
+            if (!is_dir($directory) || !is_writable($directory)) {
                 throw new ErrorException(sprintf('Directory must be writable: %s', $directory));
             }
         }
@@ -556,7 +556,7 @@ class Image extends Driver implements ImageInterface
      * Render the image and return the binary string.
      *
      *     // Render the image at 50% quality
-     *     $data = $image->render(NULL, 50);
+     *     $data = $image->render(null, 50);
      *
      *     // Render the image as a PNG
      *     $data = $image->render('png');
@@ -566,11 +566,11 @@ class Image extends Driver implements ImageInterface
      * @return  string
      * @uses    Image::_do_render
      */
-    public function render($type = NULL, $quality = 100)
+    public function render($type = null, $quality = 100)
     {
-        if ($type === NULL) {
+        if ($type === null) {
             // Use the current image type
-            $type = image_type_to_extension($this->type, FALSE);
+            $type = image_type_to_extension($this->type, false);
         }
 
         return $this->_do_render($type, $quality);
