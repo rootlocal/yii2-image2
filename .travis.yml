@@ -50,7 +50,6 @@ script:
     cd ..
     codecept run --coverage --coverage-xml
     cd ..
-    phpcs -p -n
 
 after_script:
   - vendor/bin/test-reporter --coverage-report=tests/codeception/_output/coverage.xml
