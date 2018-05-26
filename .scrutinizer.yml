@@ -46,13 +46,12 @@ build:
       - yes | pecl install imagick
       - php -m
       - cd tests; codecept build; cd ..
-  tests:
-      override:
       - chmod -R 0777 tests/runtime
       - chmod -R 0777 tests/web/assets
-      - cd tests/web; php -S localhost:8080 > /dev/null 2>&1 &
-      - cd ../
-        command: 'codecept run --coverage --coverage-xml'
-        coverage:
-        file: 'codeception/_output/coverage.xml'
-        format: 'clover'
+  tests:
+      override:
+        -
+          command: cd tests; codecept run --coverage --coverage-xml; cd ../
+          coverage:
+            file: tests/codeception/_output/coverage.xml
+            format: php-clover
