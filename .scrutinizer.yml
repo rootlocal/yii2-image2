@@ -34,6 +34,11 @@ tools:
         enabled: true
         excluded_dirs: [vendor, tests]
 build:
+  environment:
+    php:
+      version: '7.0'
+      ini:
+        'date.timezone': 'Europe/Moscow'
   dependencies:
     before:
       - composer self-update && composer --version
