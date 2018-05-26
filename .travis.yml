@@ -8,9 +8,6 @@ php:
 
 sudo: false
 
-services:
-  - mysql
-
 cache:
   directories:
     - $HOME/.composer/cache
@@ -36,9 +33,6 @@ before_script:
   - pecl channel-update pecl.php.net
   - yes | pecl install imagick
   - php -m
-  - mysql --version
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS image_test;'
-  - mysql -e 'GRANT ALL ON image_test.* TO travis;'
   - 'export PATH="${PATH}:${HOME}/.composer/vendor/bin"'
 
 script:

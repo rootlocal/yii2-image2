@@ -36,7 +36,7 @@ tools:
 build:
   environment:
     php:
-      version: '7.0'
+      version: '7.1'
       ini:
         'date.timezone': 'Europe/Moscow'
   dependencies:
