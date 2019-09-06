@@ -38,7 +38,7 @@ class Image extends BaseObject
     /**
      * @var Image
      */
-    private static $instance;
+    private static $_instance;
 
     /**
      * Loads the image to Image object
@@ -71,8 +71,8 @@ class Image extends BaseObject
      */
     public static function getInstance($file, array $config = [])
     {
-        self::$instance = new self($config);
-        return self::$instance->load($file);
+        self::$_instance = new self($config);
+        return self::$_instance->load($file);
     }
 
 }
