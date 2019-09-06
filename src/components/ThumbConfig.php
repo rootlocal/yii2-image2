@@ -60,7 +60,7 @@ class ThumbConfig extends BaseObject
     /**
      * @var ThumbConfig
      */
-    private static $instance;
+    private static $_instance;
 
     /**
      * @param array $config
@@ -68,8 +68,8 @@ class ThumbConfig extends BaseObject
      */
     public static function getInstance(array $config = [])
     {
-        self::$instance = new self($config);
-        return self::$instance;
+        self::$_instance = new self($config);
+        return self::$_instance;
     }
 
 }
