@@ -17,12 +17,8 @@ before_install:
   - composer global require squizlabs/php_codesniffer --no-suggest
 
 install:
-  - echo "pwd: `pwd`"
   - travis_retry composer self-update && composer --version
   - travis_retry composer global require "fxp/composer-asset-plugin:~1.4"
-  - travis_retry composer global require "codeception/base:^2.4.0"
-  - travis_retry composer global require "phpunit/phpunit:~6.5.14"
-  - export PATH="`pwd`/vendor/bin:$PATH"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - travis_retry composer install --dev --prefer-dist --no-interaction
   - |
@@ -31,7 +27,6 @@ install:
     cd ..
 
 before_script:
-  - echo "pwd: `pwd`"
   - pear config-set preferred_state beta
   - pecl channel-update pecl.php.net
   - yes | pecl install imagick
