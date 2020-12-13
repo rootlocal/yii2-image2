@@ -15,7 +15,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-omposer require --prefer-dist rootlocal/yii2-image2 "*"
+composer require --prefer-dist rootlocal/yii2-image2 "*"
 ```
 
 or add
