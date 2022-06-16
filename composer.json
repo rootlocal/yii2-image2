@@ -7,7 +7,8 @@
     "extension",
     "image"
   ],
-  "homepage": "http://rootlocal.ru",
+
+  "homepage": "https://github.com/rootlocal/yii2-image2.git",
   "license": "Apache-2.0",
   "authors": [
     {
@@ -16,31 +17,54 @@
       "role": "Developer"
     }
   ],
+
   "require": {
-    "php": ">=7.0",
-    "yiisoft/yii2": "~2.0.14"
+    "php": ">=7.4||^8.0||^8.1",
+    "yiisoft/yii2": "^2.0"
   },
+
   "require-dev": {
-    "yiisoft/yii2-codeception": "~2.0",
-    "codeclimate/php-test-reporter": "^0.4.4",
-    "codeception/base": "^2.4.0",
-    "phpunit/phpunit": "~6.5.14",
-    "codeception/verify": "~1.0.0",
+    "emagister/selenium-server": "^2.52",
+    "codeception/codeception": "^4.1",
+    "codeception/module-asserts": "^2.0",
+    "codeception/module-yii2": "^1.1",
+    "codeception/module-filesystem": "^1.0",
     "symfony/browser-kit": ">=2.7 <=4.2.4",
-    "emagister/selenium-server": "^2.52"
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/verify": "^2.2",
+    "squizlabs/php_codesniffer": "3.*",
+    "phploc/phploc": "^7.0",
+    "pdepend/pdepend": "^2.10",
+    "phpmd/phpmd": "^2.12",
+    "sebastian/phpcpd": "^6.0"
   },
+
   "autoload": {
     "psr-4": {
       "image\\": "src/"
     }
   },
+
   "extra": {
     "bootstrap": "image\\Bootstrap"
   },
+
   "asset-installer-paths": {
     "npm-asset-library": "vendor/npm",
     "bower-asset-library": "vendor/bower"
   },
+
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    },
+
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
+    }
+  },
+
   "repositories": [
     {
       "type": "composer",
