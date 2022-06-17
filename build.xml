@@ -27,8 +27,8 @@
             description="Cleanup build artifacts">
 
         <delete>
-            <fileset dir="${basedir}/tests/runtime" includes="**/*" />
-            <!-- <fileset dir="${basedir}/tests/web/assets" includes="**/*" /> -->
+            <fileset dir="${basedir}/tests/app/runtime" includes="**/*" />
+            <!-- <fileset dir="${basedir}/tests/app/web/assets" includes="**/*" /> -->
             <fileset dir="${basedir}/tests/codeception/_output" includes="**/*" />
             <fileset dir="${basedir}" includes="composer.phar" />
             <fileset dir="${basedir}" includes="cache.properties" />

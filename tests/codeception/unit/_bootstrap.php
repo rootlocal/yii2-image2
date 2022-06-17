@@ -1,6 +1,6 @@
 <?php
 
-use \Codeception\Util\Fixtures;
+use Codeception\Util\Fixtures;
 
 Fixtures::add('thumb1', [
     'driver' => 'GD',
